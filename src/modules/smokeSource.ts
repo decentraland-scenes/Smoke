@@ -15,7 +15,7 @@ const smokeHoles = engine.getComponentGroup(SmokeSource)
 export class ThrowSmoke implements ISystem {
   update(dt: number) { 
     for (let hole of smokeHoles.entities) {
-      let data = hole.get(SmokeSource)
+      let data = hole.getComponent(SmokeSource)
       data.nextSmoke -= dt
       if (data.nextSmoke < 0) {
         data.nextSmoke = data.smokeInterval
@@ -35,7 +35,8 @@ smokeMaterial.alpha = 1
 
 // Reusable shape component for smoke puffs
 const smokeShape = new PlaneShape()
-smokeShape.billboard = BillboardMode.BILLBOARDMODE_ALL
+
+const billboard = new Billboard(true, false, false)
 
 // Spawner object to generate smoke puffs
 export const smokeSpawner = {
@@ -71,28 +72,30 @@ export const smokeSpawner = {
 
     const size = Math.random() / 2 + 0.2
 
-    ent.set(smokeShape)
-    ent.set(smokeMaterial)
+    ent.addOrReplaceComponent(smokeShape)
+    ent.addOrReplaceComponent(smokeMaterial)
 
     ent.setParent(parent)
 
-    if (!ent.getOrNull(Transform)) {
+    if (!ent. getComponentOrNull(Transform)) {
       const t = new Transform()
-      ent.set(t)
+      ent.addOrReplaceComponent(t)
       t.scale.set(size, size, size)
       t.position.set(0, 0, 0)
     } else {
-      const t = ent.get(Transform)
+      const t = ent.getComponent(Transform)
       t.scale.set(size, size, size)
       t.position.set(0, 0, 0)
     }
 
-    if (!ent.getOrNull(SmokeVelocity)) {
-      ent.set(new SmokeVelocity(newVel.x, newVel.y, newVel.z))
+    if (!ent. getComponentOrNull(SmokeVelocity)) {
+      ent.addOrReplaceComponent(new SmokeVelocity(newVel.x, newVel.y, newVel.z))
     } else {
-      const vel = ent.get(SmokeVelocity)
+      const vel = ent.getComponent(SmokeVelocity)
       vel.set(newVel.x, newVel.y, newVel.z)
     }
+
+    ent.addComponent(billboard)
 
     engine.addEntity(ent)
   }

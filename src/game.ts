@@ -1,22 +1,22 @@
-import { SmokeSource, ThrowSmoke } from "./smokeSource";
-import { SmokeSystem } from "./smoke";
+import { SmokeSource, ThrowSmoke } from "./modules/smokeSource";
+import { SmokeSystem } from "./modules/smoke";
 
 // add fireplace
 let fire = new Entity()
-fire.add(new GLTFShape("models/Fireplace.glb"))
-fire.add(new Transform({
+fire.addComponent(new GLTFShape("models/Fireplace.glb"))
+fire.addComponent(new Transform({
   position: new Vector3(5, 0, 5)
 }))
 
 // Add a smoke source that creates a smoke puff every 0.2 seconds
-fire.add(new SmokeSource(0.2))
+fire.addComponent(new SmokeSource(0.2))
 engine.addEntity(fire)
 
 
 // ground
 let floor = new Entity()
-floor.add(new GLTFShape("models/FloorBaseGrass.glb"))
-floor.add(new Transform({
+floor.addComponent(new GLTFShape("models/FloorBaseGrass.glb"))
+floor.addComponent(new Transform({
   position: new Vector3(5, 0, 5)
 }))
 engine.addEntity(floor)
