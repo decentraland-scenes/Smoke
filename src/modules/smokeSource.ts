@@ -72,14 +72,14 @@ export const smokeSpawner = {
 
     const size = Math.random() / 2 + 0.2
 
-    ent.addOrReplaceComponent(smokeShape)
-    ent.addOrReplaceComponent(smokeMaterial)
+    ent.addComponentOrReplace(smokeShape)
+    ent.addComponentOrReplace(smokeMaterial)
 
     ent.setParent(parent)
 
     if (!ent. getComponentOrNull(Transform)) {
       const t = new Transform()
-      ent.addOrReplaceComponent(t)
+      ent.addComponentOrReplace(t)
       t.scale.set(size, size, size)
       t.position.set(0, 0, 0)
     } else {
@@ -89,13 +89,14 @@ export const smokeSpawner = {
     }
 
     if (!ent. getComponentOrNull(SmokeVelocity)) {
-      ent.addOrReplaceComponent(new SmokeVelocity(newVel.x, newVel.y, newVel.z))
+      ent.addComponentOrReplace(new SmokeVelocity(newVel.x, newVel.y, newVel.z))
     } else {
       const vel = ent.getComponent(SmokeVelocity)
       vel.set(newVel.x, newVel.y, newVel.z)
     }
 
-    ent.addComponent(billboard)
+    if (!ent.hasComponent(Billboard))
+      ent.addComponent(billboard)
 
     engine.addEntity(ent)
   }
