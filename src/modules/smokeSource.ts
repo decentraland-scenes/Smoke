@@ -28,12 +28,14 @@ export class ThrowSmoke implements ISystem {
 
 
 // Reusable material for smoke puffs
-let smokeTexture = new Texture('textures/smoke-puff3.png',{hasAlpha: true})
+let smokeTexture = new Texture('textures/smoke-puff3.png', {hasAlpha: true})
 
-const smokeMaterial = new Material()
-smokeMaterial.albedoTexture = smokeTexture
-smokeMaterial.hasAlpha = true
-smokeMaterial.alpha = 1
+
+const smokeMaterial = new BasicMaterial()
+smokeMaterial.texture = smokeTexture
+smokeMaterial.alphaTest = 0.2
+// smokeMaterial.hasAlpha = true
+// smokeMaterial.alpha = 1
 
 // Reusable shape component for smoke puffs
 const smokeShape = new PlaneShape()
@@ -45,7 +47,7 @@ export const smokeSpawner = {
   MAX_POOL_SIZE: 50,
   pool: [] as Entity[],
 
-  getEntityFromPool(): Entity | null {
+  getEntityFromPool(): IEntity | null {
     for (let i = 0; i < smokeSpawner.pool.length; i++) {
       if (!smokeSpawner.pool[i].alive) {
         return smokeSpawner.pool[i]
@@ -61,7 +63,7 @@ export const smokeSpawner = {
     return null
   },
 
-  SpawnSmokePuff(parent: Entity) {
+  SpawnSmokePuff(parent: IEntity) {
     const ent = smokeSpawner.getEntityFromPool()
 
     if (!ent) return
@@ -103,3 +105,26 @@ export const smokeSpawner = {
     engine.addEntity(ent)
   }
 }
+
+
+
+let testPuff = new Entity()
+
+//testPuff.addComponent(smokeShape)
+testPuff.addComponent(smokeMaterial)
+testPuff.addComponent(new PlaneShape())
+
+const t = new Transform()
+testPuff.addComponentOrReplace(t)
+  t.scale.set(2, 2, 2)
+  t.position.set(3, 1, 3)
+
+
+
+//testPuff.addComponentOrReplace(new SmokeVelocity(newVel.x, newVel.y, newVel.z))
+
+
+
+testPuff.addComponent(billboard)
+
+engine.addEntity(testPuff)
