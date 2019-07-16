@@ -7,7 +7,7 @@ This simple scene shows how to handle a particle system to create smoke. There a
 
 ![](screenshot/screenshot.png)
 
-[Explore the scene](https://smoke-iqntujtjgb.now.sh): this link takes you to a copy of the scene deployed to a remote server where you can interact with it just as if you were running `dcl start` locally.
+[Explore the scene](https://smoke-sjjygzpfug.now.sh): this link takes you to a copy of the scene deployed to a remote server where you can interact with it just as if you were running `dcl start` locally.
 
 **Install the CLI**
 
