@@ -1,12 +1,20 @@
-
 // Custom component for smoke puffs
 @Component('smokevelocity')
-export class SmokeVelocity extends Vector3 {
+export class SmokeVelocity {
+  x: number
+  y: number
+  z: number
   constructor(x: number, y: number, z: number) {
-    super(x, y, z)
+    this.x = x
+    this.y = y
+    this.z = z
+  }
+  set(x: number, y: number, z: number) {
+    this.x = x
+    this.y = y
+    this.z = z
   }
 }
-
 
 // Component group listing all smoke puffs
 export const smokePuffs = engine.getComponentGroup(SmokeVelocity)
@@ -14,7 +22,6 @@ export const smokePuffs = engine.getComponentGroup(SmokeVelocity)
 // System to update the position of all smoke puffs based on their velocity
 export class SmokeSystem implements ISystem {
   update(dt: number) {
-
     for (let entity of smokePuffs.entities) {
       const transform = entity.getComponent(Transform)
       const velocity = entity.getComponent(SmokeVelocity)

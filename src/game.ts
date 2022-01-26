@@ -25,4 +25,3 @@ engine.addEntity(floor)
 // Initiate systems
 engine.addSystem(new ThrowSmoke())
 engine.addSystem(new SmokeSystem())
-

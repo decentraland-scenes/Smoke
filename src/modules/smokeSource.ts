@@ -1,4 +1,4 @@
-import { SmokeVelocity } from "./smoke";
+import { SmokeVelocity } from './smoke'
 
 @Component('smokeSource')
 export class SmokeSource {
@@ -13,7 +13,7 @@ export class SmokeSource {
 const smokeHoles = engine.getComponentGroup(SmokeSource)
 
 export class ThrowSmoke implements ISystem {
-  update(dt: number) { 
+  update(dt: number) {
     for (let hole of smokeHoles.entities) {
       let data = hole.getComponent(SmokeSource)
       data.nextSmoke -= dt
@@ -25,17 +25,19 @@ export class ThrowSmoke implements ISystem {
   }
 }
 
-
-
 // Reusable material for smoke puffs
 let smokeTexture = new Texture('textures/smoke-puff3.png')
-
 
 const smokeMaterial = new Material()
 smokeMaterial.albedoTexture = smokeTexture
 
-smokeMaterial.alphaTest = 0.2
 smokeMaterial.alphaTexture = smokeTexture
+smokeMaterial.transparencyMode = TransparencyMode.ALPHA_TEST_AND_BLEND
+// smokeMaterial.transparencyMode = TransparencyMode.ALPHA_TEST
+smokeMaterial.alphaTest = 0.4
+
+// smokeMaterial.metallic = 0
+// smokeMaterial.roughness = 1
 
 // Reusable shape component for smoke puffs
 const smokeShape = new PlaneShape()
@@ -71,7 +73,7 @@ export const smokeSpawner = {
     const newVel = {
       x: (Math.random() - Math.random()) / 6,
       y: Math.random() / 2 + 0.1,
-      z: (Math.random() - Math.random()) / 6
+      z: (Math.random() - Math.random()) / 6,
     }
 
     const size = Math.random() / 2 + 0.2
@@ -81,7 +83,7 @@ export const smokeSpawner = {
 
     ent.setParent(parent)
 
-    if (!ent. getComponentOrNull(Transform)) {
+    if (!ent.getComponentOrNull(Transform)) {
       const t = new Transform()
       ent.addComponentOrReplace(t)
       t.scale.set(size, size, size)
@@ -92,21 +94,18 @@ export const smokeSpawner = {
       t.position.set(0, 0, 0)
     }
 
-    if (!ent. getComponentOrNull(SmokeVelocity)) {
+    if (!ent.getComponentOrNull(SmokeVelocity)) {
       ent.addComponentOrReplace(new SmokeVelocity(newVel.x, newVel.y, newVel.z))
     } else {
       const vel = ent.getComponent(SmokeVelocity)
       vel.set(newVel.x, newVel.y, newVel.z)
     }
 
-    if (!ent.hasComponent(Billboard))
-      ent.addComponent(billboard)
+    if (!ent.hasComponent(Billboard)) ent.addComponent(billboard)
 
     engine.addEntity(ent)
-  }
+  },
 }
-
-
 
 // let testPuff = new Entity()
 
