@@ -22,7 +22,7 @@ export const smokePuffs = engine.getComponentGroup(SmokeVelocity)
 // System to update the position of all smoke puffs based on their velocity
 export class SmokeSystem implements ISystem {
   update(dt: number) {
-    for (let entity of smokePuffs.entities) {
+    for (const entity of smokePuffs.entities) {
       const transform = entity.getComponent(Transform)
       const velocity = entity.getComponent(SmokeVelocity)
 
@@ -30,7 +30,7 @@ export class SmokeSystem implements ISystem {
       transform.position.y += velocity.y * dt
       transform.position.z += velocity.z * dt
 
-      let newScale = transform.scale.x * 1.0025
+      const newScale = transform.scale.x * 1.0025
 
       transform.scale.setAll(newScale)
 
