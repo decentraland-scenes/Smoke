@@ -26,21 +26,19 @@ export class ThrowSmoke implements ISystem {
 }
 
 // Reusable material for smoke puffs
-const smokeTexture = new Texture('textures/smoke-puff3.png')
+const smokeTexture = new Texture('textures/smoke-puff2.png', { hasAlpha: true })
 
 const smokeMaterial = new Material()
 smokeMaterial.albedoTexture = smokeTexture
 
 smokeMaterial.alphaTexture = smokeTexture
-smokeMaterial.transparencyMode = TransparencyMode.ALPHA_TEST_AND_BLEND
-// smokeMaterial.transparencyMode = TransparencyMode.ALPHA_TEST
-smokeMaterial.alphaTest = 0.4
 
-// smokeMaterial.metallic = 0
-// smokeMaterial.roughness = 1
+smokeMaterial.metallic = 0
+smokeMaterial.roughness = 1
 
 // Reusable shape component for smoke puffs
 const smokeShape = new PlaneShape()
+smokeShape.withCollisions = false
 
 const billboard = new Billboard(false, true, false)
 
@@ -73,7 +71,7 @@ export const smokeSpawner = {
     const newVel = {
       x: (Math.random() - Math.random()) / 6,
       y: Math.random() / 2 + 0.1,
-      z: (Math.random() - Math.random()) / 6
+      z: (Math.random() - Math.random()) / 6,
     }
 
     const size = Math.random() / 2 + 0.2
@@ -104,7 +102,7 @@ export const smokeSpawner = {
     if (!ent.hasComponent(Billboard)) ent.addComponent(billboard)
 
     engine.addEntity(ent)
-  }
+  },
 }
 
 // let testPuff = new Entity()
